@@ -1,0 +1,34 @@
+# Runtime data
+/tasks/
+/bugs/
+/worktrees/
+/discussions/
+/audit-calibration.jsonl
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+reasonix.toml
+*.key
+*.pem
+*.pfx
+*.p12
+
+# Logs and generated reports
+*.log
+*.tmp
+*.bak
+/test-results/
+/release-audit/
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# PowerShell and test scratch
+*.clixml
+TestResults/
