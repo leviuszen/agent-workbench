@@ -55,6 +55,15 @@ No confirmed public-release defects are recorded yet.
 - Verification: Parser checks, targeted regressions, and all 15 tests pass locally under Windows PowerShell 5.1. GitHub Actions run `29800641691` passed all 15 tests under both Windows PowerShell 5.1 and PowerShell 7.
 - Compatibility impact: Helper scripts now preserve the caller's PowerShell edition; Unicode path coverage remains intact.
 
+## 2026-07-21 - Release hygiene did not inspect ordinary personal data in Git history
+
+- Affected version: initial `v0.1.0` repository publication
+- Symptom: A superseded contact address remained readable in an earlier commit even though the current tree and secret scanner were clean.
+- Root cause: The release gate scanned the current tree and secret patterns, but did not apply the public email allowlist to every reachable Git patch.
+- Fix or mitigation: Recreate the repository from a validated clean root, fetch full history in CI, and scan reachable history for unexpected email addresses and private path markers without echoing the matched values.
+- Verification: The rebuilt repository started from one clean root commit, the superseded commit URL returns not found, and both local history scanning and GitHub Actions validate the new history gate.
+- Compatibility impact: Release-process and test-only hardening; runtime behavior is unchanged.
+
 ## Record Format
 
 ```markdown

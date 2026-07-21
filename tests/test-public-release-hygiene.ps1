@@ -60,19 +60,59 @@ foreach ($file in $files) {
   }
 }
 
-$allowedPublicEmails = @("agentworkbench@proton.me")
+$allowedPublicEmails = @(
+"agentworkbench@proton.me",
+"leviuszen@users.noreply.github.com"
+)
 $emailPattern = '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}'
 $allPublicFiles = Get-ChildItem -LiteralPath $repoRoot -Recurse -File -Force |
   Where-Object { $_.FullName -notlike "$repoRoot\.git\*" }
 foreach ($file in $allPublicFiles) {
-  $content = Get-Content -LiteralPath $file.FullName -Raw -Encoding UTF8
-  foreach ($match in [regex]::Matches($content, $emailPattern)) {
+$content = Get-Content -LiteralPath $file.FullName -Raw -Encoding UTF8
+foreach ($match in [regex]::Matches($content, $emailPattern)) {
     $address = $match.Value
     $isSynthetic = $address.EndsWith("@example.invalid", [System.StringComparison]::OrdinalIgnoreCase)
     $isApproved = $address -in $allowedPublicEmails
     Assert ($isSynthetic -or $isApproved) "Unapproved public email in $($file.FullName)"
+}
+}
+
+$historyOutput = & git -C $repoRoot log --all --format=fuller -p --no-color 2>&1
+Assert ($LASTEXITCODE -eq 0) "Unable to inspect complete Git history."
+$historyContent = [string]::Join([Environment]::NewLine, @($historyOutput))
+$allowedHistoryEmails = @(
+"agentworkbench@proton.me",
+"leviuszen@users.noreply.github.com"
+)
+$unexpectedHistoryEmailCount = 0
+foreach ($match in [regex]::Matches($historyContent, $emailPattern)) {
+$address = $match.Value
+$isSynthetic = $address.EndsWith("@example.invalid", [System.StringComparison]::OrdinalIgnoreCase)
+$isApproved = $address -in $allowedHistoryEmails
+if (-not ($isSynthetic -or $isApproved)) {
+$unexpectedHistoryEmailCount += 1
+}
+}
+Assert ($unexpectedHistoryEmailCount -eq 0) "Git history contains unexpected email address occurrences. Run the local privacy audit before publishing."
+
+$forbiddenHistoryMarkers = @(
+  ("J:" + "\Codex\workspaces"),
+  ("G:" + "\github-repos"),
+  ("D:" + "\Users\"),
+  ("Q" + "Claw")
+)
+foreach ($marker in $forbiddenHistoryMarkers) {
+  Assert (-not $historyContent.Contains($marker)) "Git history contains a forbidden private marker."
+}
+
+$allowedSyntheticUserSegments = @("Alice", '$unicodeUser')
+$unexpectedUserPathCount = 0
+foreach ($match in [regex]::Matches($historyContent, 'C:\\Users\\([^\\\s"]+)')) {
+  if ($match.Groups[1].Value -notin $allowedSyntheticUserSegments) {
+    $unexpectedUserPathCount += 1
   }
 }
+Assert ($unexpectedUserPathCount -eq 0) "Git history contains unexpected Windows user-profile path occurrences."
 
 $installer = Get-Content -LiteralPath (Join-Path $repoRoot "scripts\Install-AgentWorkbench.ps1") -Raw -Encoding UTF8
 Assert ($installer.Contains("AGENT_WORKBENCH_HOME")) "Installer must support AGENT_WORKBENCH_HOME."
