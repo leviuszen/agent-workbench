@@ -1,8 +1,8 @@
 # Release Messaging Strategy / 发布营销定位
 
-This document explains how to market Agent Workbench without turning current implementation details into the product identity or making claims the release cannot support.
+This document explains how to market Meaning Assurance without turning current implementation details into the product identity or making claims the release cannot support.
 
-本文用于说明如何宣传 Agent Workbench，同时避免把当前实现中的 Agent 组合误当成产品本体，也避免作出超过现有证据的承诺。
+本文用于说明如何宣传 Meaning Assurance，同时避免把当前实现中的 Agent 组合误当成产品本体，也避免作出超过现有证据的承诺。
 
 ## Positioning Decision / 定位结论
 
@@ -18,6 +18,30 @@ The controller, worker, and reviewer roles are replaceable. The current adapters
 
 控制者、worker 和 reviewer 都应当是可替换角色。当前 adapter 只是机制的一种实现证据，不是产品定义。
 
+Brand and author hierarchy:
+
+```text
+Meaning                         brand umbrella
+└── Meaning Assurance           public product name
+    └── by LEVIUS               public author signature
+```
+
+品牌与作者层级：
+
+```text
+Meaning                         品牌母层
+└── Meaning Assurance           公开产品名称
+    └── by LEVIUS               公开作者署名
+```
+
+Existing repository, script, CLI, environment-variable, and installation-path
+identifiers remain technical compatibility names until a separately authorized
+rename. `Assurance` describes a governed verification process, not a guarantee
+of correctness.
+
+现有仓库、脚本、CLI、环境变量和安装路径标识继续作为技术兼容名称，除非另行
+授权重命名。`Assurance` 描述受治理的核验过程，不保证正确。
+
 ## The Problem Category / 问题类别
 
 The category is not "run more agents." It is "govern multi-agent handoffs in real work."
@@ -27,13 +51,15 @@ The category is not "run more agents." It is "govern multi-agent handoffs in rea
 The central tension is:
 
 ```text
-External agents increase execution and review capacity,
-but unmanaged delegation weakens scope, provenance, repeatability, and accountability.
+Your coding agent says “Done.”
+Its tone can be more certain than the evidence it leaves behind.
+Another agent agreeing may be synchronized confidence, not independent verification.
 ```
 
 ```text
-外部 Agent 能扩大执行和审查能力，
-但缺少治理的委派会削弱范围控制、证据来源、可重复性和责任边界。
+你的 Coding Agent 说“完成了”。
+它的语气可能比留下的证据更确定。
+另一个 Agent 表示同意，可能只是同步的自信，而不是独立核验。
 ```
 
 ## Differentiation / 差异化优势
@@ -77,7 +103,7 @@ One file and state mechanism supports:
 
 Use architectural comparisons, not unsupported superiority claims:
 
-| Alternative approach | Agent Workbench advantage | Honest tradeoff |
+| Alternative approach | Meaning Assurance advantage | Honest tradeoff |
 |---|---|---|
 | Hosted multi-agent orchestrator | Lighter local setup; no service stack or control plane. | No remote fleet management, hosted dashboard, or broad integration catalog. |
 | Shared agent chatroom | Stronger task state, evidence bundles, reviewer gates, and final decision artifacts. | Less suited to free-form real-time social conversation. |
@@ -86,15 +112,15 @@ Use architectural comparisons, not unsupported superiority claims:
 
 Recommended comparative sentence:
 
-> If you already have capable agents and need a lighter way to govern how they exchange work, evidence, and decisions, Agent Workbench adds the control layer without asking you to adopt another hosted platform.
+> If you already have capable agents and need a lighter way to govern how they exchange work, evidence, and decisions, Meaning Assurance adds the control layer without asking you to adopt another hosted platform.
 
 推荐的中文对比表达：
 
-> 如果你已经拥有能力足够的 Agent，只是缺少一套更轻的工作交接、证据复查和决策控制机制，Agent Workbench 可以补上控制层，而不要求你再部署一套托管式多 Agent 平台。
+> 如果你已经拥有能力足够的 Agent，只是缺少一套更轻的工作交接、证据复查和决策控制机制，Meaning Assurance 可以补上控制层，而不要求你再部署一套托管式多 Agent 平台。
 
 ## Primary Work Scenarios / 核心工作场景
 
-| Work scenario | User pain | Agent Workbench response | Release evidence |
+| Work scenario | User pain | Meaning Assurance response | Release evidence |
 |---|---|---|---|
 | Bounded implementation / 受控实现 | A worker may edit the wrong workspace or broaden scope. | Task packet plus isolated Git worktree; no automatic merge. | `New-AgentTask.ps1`, `New-AgentWorktree.ps1`, worker tests |
 | Independent review / 独立审查 | Reviewers may see different evidence or converge without proof. | Frozen reference bundle, blind Round 1, separate canonical outputs. | reference manifest, hashes, `roundN/<agent>.md` |
@@ -130,12 +156,14 @@ OpenHands and other runtimes should be described as possible adapter targets, no
 
 Use this order in release pages, posts, and demos:
 
-1. **Work problem:** delegation becomes unreliable when scope, evidence, retry state, and final authority are unclear.
-2. **User outcome:** external agents can contribute without silently becoming the source of truth.
-3. **Mechanism:** task packets, isolated worktrees, frozen evidence, reviewer gates, process leases, and moderator decisions.
-4. **Replaceable roles:** controller, worker, and reviewer are protocol roles, not permanent brands.
-5. **Current implementation:** Windows, PowerShell, Claude Code and Reasonix adapters, Codex-oriented filenames.
-6. **Boundary:** no OS sandbox, no automatic merge, no guarantee of privacy or correctness.
+1. **Familiar event:** the coding agent says “Done.”
+2. **Recognition conflict:** what evidence exists, and is agreement only synchronized confidence?
+3. **Project position:** agents can produce answers but should not approve themselves.
+4. **Product answer:** Meaning Assurance governs bounded execution, review evidence, and human acceptance.
+5. **Mechanism:** task packets, isolated worktrees, frozen evidence, reviewer gates, process leases, and moderator decisions.
+6. **Replaceable roles:** controller, worker, and reviewer are protocol roles, not permanent brands.
+7. **Current implementation:** Windows, PowerShell, Claude Code and Reasonix adapters, Codex-oriented filenames.
+8. **Boundary:** no OS sandbox, no automatic merge, no guarantee of privacy or correctness.
 
 不要先讲脚本名称。`task packet`、`worktree` 和 `manifest` 是可信度证明，不是第一句广告。第一句必须让用户认出自己遇到过的工作困境。
 
@@ -148,6 +176,7 @@ Use this order in release pages, posts, and demos:
 - Review agent work before any change is accepted.
 - Keep workers and reviewers replaceable while preserving the same task and evidence contract.
 - Make timeouts, missing reviewers, unresolved disagreements, and missing decisions visible states.
+- Name agent agreement without demonstrated independent verification as `synchronized confidence`.
 
 ### 中文
 
@@ -156,6 +185,7 @@ Use this order in release pages, posts, and demos:
 - 在任何修改被接受前，先复核 Agent 的代码、证据和状态。
 - worker 和 reviewer 可以替换，任务与证据合同不随 Agent 品牌改变。
 - 让超时、缺失 reviewer、未解决分歧和缺少最终决定都成为可见状态。
+- 把“Agent 意见一致，但没有展示独立核验”命名为“同步的自信”。
 
 ## Claims To Avoid / 禁止夸大
 
@@ -183,19 +213,19 @@ Do not claim:
 
 ### English one-liner
 
-> Agent Workbench is a local protocol for delegating bounded work to replaceable coding agents while preserving evidence and human control.
+> Meaning Assurance is a local, file-backed assurance protocol for coding agents: it delegates bounded execution, preserves review evidence, and keeps acceptance under human control.
 
 ### 中文一句话
 
-> Agent Workbench 是一套本地 Agent 协作协议，让可替换的编码 Agent 承担有边界的工作，同时保留证据和人工决定权。
+> Meaning Assurance 是一套本地、文件化的 Coding Agent assurance 协议：让有边界的执行可以被委托，保留可复查证据，并把最终接受权留给人类。
 
 ### English short announcement
 
-> Running a second coding agent is easy. Knowing what it saw, preventing duplicate retries, keeping code changes isolated, and forcing review discussions to end in a real decision is harder. Agent Workbench v0.1.0 turns those handoffs into local task packets, frozen evidence, explicit state gates, and reviewable decisions.
+> Your coding agent says “Done.” What evidence did it leave? Another agent agreeing may be synchronized confidence, not independent verification. Meaning Assurance v0.1.0 turns delegation and review into local task packets, frozen evidence, explicit state gates, and reviewable decisions while keeping final acceptance human.
 
 ### 中文短公告
 
-> 再启动一个编码 Agent 很容易。难的是确认它看过什么、避免超时后重复启动、隔离代码修改，并让多轮审查最终形成真正的决定。Agent Workbench v0.1.0 用本地任务包、冻结证据、明确状态门和可复查裁决，把这些交接变成正式工作流。
+> 你的 Coding Agent 说“完成了”。它留下了什么证据？另一个 Agent 表示同意，可能只是同步的自信，而不是独立核验。Meaning Assurance v0.1.0 用本地任务包、冻结证据、明确状态门和可复查决定组织委托与复审，并把最终接受权留给人类。
 
 ### Demo opening / 演示开场
 
@@ -207,10 +237,12 @@ Do not claim:
 
 For the public preview, measure whether readers understand these points after one pass:
 
-1. Agent Workbench governs handoffs; it does not provide a new model.
+1. Meaning Assurance governs handoffs; it does not provide a new model.
 2. Agent roles are replaceable, but v0.1.0 has only two formal non-interactive adapters.
 3. The strongest value is inspectability and decision control, not maximum autonomy.
 4. Worktrees and redaction reduce risk but do not create an OS sandbox or privacy guarantee.
 5. The release is useful only for users whose workflow is complex enough to justify durable packets and gates.
+6. Readers can explain `synchronized confidence` without concluding that all agent agreement is worthless.
+7. AI answer systems preserve the Meaning / Meaning Assurance / LEVIUS relationship and the no-self-approval, no-auto-merge, and no-correctness-guarantee boundaries.
 
 If readers mainly describe it as "Codex calling Claude" or "another agent chatroom," the positioning has failed and the release copy should be revised.

@@ -80,9 +80,12 @@ foreach ($match in [regex]::Matches($content, $emailPattern)) {
 $historyOutput = & git -C $repoRoot log --all --format=fuller -p --no-color 2>&1
 Assert ($LASTEXITCODE -eq 0) "Unable to inspect complete Git history."
 $historyContent = [string]::Join([Environment]::NewLine, @($historyOutput))
+$githubWebAuthorEmail = [string]::Concat("291123244+leviuszen", "@users.noreply.github.com")
+$githubMergeCommitterEmail = [string]::Concat("noreply", "@github.com")
 $allowedHistoryEmails = @(
-"agentworkbench@proton.me",
-"leviuszen@users.noreply.github.com"
+  $allowedPublicEmails
+  $githubWebAuthorEmail
+  $githubMergeCommitterEmail
 )
 $unexpectedHistoryEmailCount = 0
 foreach ($match in [regex]::Matches($historyContent, $emailPattern)) {
